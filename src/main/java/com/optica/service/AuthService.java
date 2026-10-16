@@ -75,4 +75,12 @@ public class AuthService {
         if (!correo.contains("@"))                    throw new IllegalArgumentException("Correo inválido");
         if (password == null || password.length() < 6) throw new IllegalArgumentException("La contraseña debe tener al menos 6 caracteres");
     }
+    public java.util.List<Usuario> listarClientes() {
+        java.util.List<Usuario> todos = usuarioDAO.listarTodos();
+        java.util.List<Usuario> clientes = new java.util.ArrayList<>();
+        for (Usuario u : todos) {
+            if (u.getRol() == Usuario.Rol.CLIENTE) clientes.add(u);
+        }
+        return clientes;
+    }
 }
