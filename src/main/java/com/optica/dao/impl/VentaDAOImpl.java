@@ -26,7 +26,7 @@ public class VentaDAOImpl implements VentaDAO {
 
     @Override
     public int insertar(Venta v, Connection c) throws SQLException {
-        // La conexión viene desde fuera (para participar en una transacción)
+        
         int idVenta;
         try (PreparedStatement ps = c.prepareStatement(INSERT_VENTA, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, v.getIdCliente());
@@ -44,7 +44,7 @@ public class VentaDAOImpl implements VentaDAO {
         }
         v.setIdVenta(idVenta);
 
-        // Insertar los detalles
+        
         try (PreparedStatement ps = c.prepareStatement(INSERT_DETALLE, Statement.RETURN_GENERATED_KEYS)) {
             for (DetalleVenta d : v.getDetalles()) {
                 ps.setInt(1, idVenta);
@@ -102,7 +102,7 @@ public class VentaDAOImpl implements VentaDAO {
                     lista.add(v);
                 }
             }
-            // Cargar detalles de cada venta
+            
             for (Venta v : lista) cargarDetalles(c, v);
         } catch (SQLException e) {
             throw new RuntimeException(e);

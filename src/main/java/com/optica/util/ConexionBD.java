@@ -7,7 +7,6 @@ import java.util.Properties;
 
 public class ConexionBD {
 
-    // [BD] Cambiar cuando exista la BD
     private static final String URL  = "jdbc:mysql://localhost:3306/optica_db?useSSL=false&serverTimezone=America/Tegucigalpa";
     private static final String USER = "root";
     private static final String PASS = "";

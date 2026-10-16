@@ -1,9 +1,5 @@
 package com.optica.model;
 
-/**
- * Representa a cualquier usuario del sistema:
- * puede ser CLIENTE o VENDEDOR según su rol.
- */
 public class Usuario {
 
     public enum Rol { CLIENTE, VENDEDOR }
@@ -28,7 +24,7 @@ public class Usuario {
         this.rol = rol;
     }
 
-    // --- Getters y Setters ---
+    
 
     public int getIdUsuario() { return idUsuario; }
     public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
