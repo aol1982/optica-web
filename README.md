@@ -8,7 +8,7 @@ Aplicación web en Java (Jakarta EE) para gestionar los procesos de una óptica:
 - Java 21 LTS (Temurin)
 - Jakarta Servlet 6 / JSP 3.1 / JSTL 3
 - JDBC puro con patrón DAO
-- MySQL 8
+- SQL SERVER with AZURE
 - Maven 3.10
 - Apache Tomcat 10
 
@@ -21,5 +21,5 @@ Aplicación web en Java (Jakarta EE) para gestionar los procesos de una óptica:
 - [ ] Servicios
 - [ ] Servlets
 - [ ] Vistas JSP
-- [ ] Conexión a MySQL
+- [ ] Conexión a SQL Server
 - [ ] Despliegue en Tomcat
