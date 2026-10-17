@@ -29,7 +29,7 @@
                 </c:if>
             </ul>
             <span class="navbar-text text-white me-3">
-                <i class="bi bi-person-circle"></i> ${sessionScope.usuario.nombre}
+                <i class="bi bi-person-circle"></i> ${sessionScope.usuario.correo}
             </span>
             <a class="btn btn-outline-light btn-sm" href="${pageContext.request.contextPath}/logout">Salir</a>
         </c:if>

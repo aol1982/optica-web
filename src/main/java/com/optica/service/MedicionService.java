@@ -4,7 +4,6 @@ import com.optica.dao.MedicionDAO;
 import com.optica.dao.impl.MedicionDAOImpl;
 import com.optica.model.Medicion;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class MedicionService {
@@ -20,8 +19,7 @@ public class MedicionService {
     }
 
     public int registrar(Medicion m) {
-        validar(m);
-        if (m.getFecha() == null) m.setFecha(LocalDate.now());
+        if (m.getIdCliente() <= 0) throw new IllegalArgumentException("Cliente inválido");
         return medicionDAO.insertar(m);
     }
 
@@ -35,17 +33,10 @@ public class MedicionService {
 
     public boolean actualizar(Medicion m) {
         if (m.getIdMedicion() <= 0) throw new IllegalArgumentException("ID inválido");
-        validar(m);
         return medicionDAO.actualizar(m);
     }
 
     public boolean eliminar(int id) {
         return medicionDAO.eliminar(id);
-    }
-
-    private void validar(Medicion m) {
-        if (m.getIdCliente() <= 0) throw new IllegalArgumentException("Cliente inválido");
-        if (m.getOjo() == null || (!m.getOjo().equals("OD") && !m.getOjo().equals("OI")))
-            throw new IllegalArgumentException("El ojo debe ser 'OD' o 'OI'");
     }
 }

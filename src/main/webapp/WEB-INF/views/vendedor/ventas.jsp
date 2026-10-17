@@ -25,12 +25,17 @@
                         <select name="idCliente" class="form-select" required>
                             <option value="">— Selecciona un cliente —</option>
                             <c:forEach var="cl" items="${clientes}">
-                                <option value="${cl.idUsuario}">${cl.nombre} (${cl.correo})</option>
+                                <option value="${cl.idCliente}">${cl.nombre} (${cl.dni})</option>
                             </c:forEach>
                         </select>
                     </div>
                     <div class="mb-2">
-                        <label class="form-label">Aro</label>
+                        <label class="form-label">ID Medición (obligatorio)</label>
+                        <input type="number" name="idMedicion" class="form-control" required min="1"
+                               placeholder="ID de la medición del cliente">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Aro (opcional)</label>
                         <select name="idAro" class="form-select">
                             <option value="">— Sin aro —</option>
                             <c:forEach var="a" items="${aros}">
@@ -41,8 +46,8 @@
                         </select>
                     </div>
                     <div class="mb-2">
-                        <label class="form-label">Medición (opcional)</label>
-                        <input type="number" name="idMedicion" class="form-control" placeholder="ID de medición">
+                        <label class="form-label">Accesorio (opcional)</label>
+                        <input type="number" name="idAccesorio" class="form-control" placeholder="ID accesorio">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Cantidad</label>
@@ -69,7 +74,7 @@
                         <c:forEach var="v" items="${ventas}">
                             <tr>
                                 <td>${v.idVenta}</td>
-                                <td>${v.fecha}</td>
+                                <td>${v.fechaVenta}</td>
                                 <td>${v.idCliente}</td>
                                 <td>L. <fmt:formatNumber value="${v.subtotal}" pattern="#,##0.00"/></td>
                                 <td>L. <fmt:formatNumber value="${v.impuesto}" pattern="#,##0.00"/></td>

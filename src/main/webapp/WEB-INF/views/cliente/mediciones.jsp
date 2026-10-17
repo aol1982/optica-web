@@ -8,31 +8,39 @@
 
 <div class="card shadow-sm">
     <div class="table-responsive">
-        <table class="table table-hover mb-0">
+        <table class="table table-hover mb-0 text-center align-middle">
             <thead class="table-dark">
                 <tr>
-                    <th>Fecha</th>
-                    <th>Ojo</th>
+                    <th rowspan="2">Fecha</th>
+                    <th colspan="3">Ojo Derecho (OD)</th>
+                    <th colspan="3">Ojo Izquierdo (OI)</th>
+                    <th rowspan="2">Adición</th>
+                </tr>
+                <tr>
                     <th>Esfera</th>
                     <th>Cilindro</th>
                     <th>Eje</th>
-                    <th>Adición</th>
+                    <th>Esfera</th>
+                    <th>Cilindro</th>
+                    <th>Eje</th>
                 </tr>
             </thead>
             <tbody>
                 <c:forEach var="m" items="${mediciones}">
                     <tr>
-                        <td>${m.fecha}</td>
-                        <td>${m.ojo}</td>
-                        <td>${m.esfera}</td>
-                        <td>${m.cilindro}</td>
-                        <td>${m.eje}</td>
+                        <td>${m.fechaRegistro}</td>
+                        <td>${m.esferaOd}</td>
+                        <td>${m.cilindroOd}</td>
+                        <td>${m.ejeOd}</td>
+                        <td>${m.esferaOi}</td>
+                        <td>${m.cilindroOi}</td>
+                        <td>${m.ejeOi}</td>
                         <td>${m.adicion}</td>
                     </tr>
                 </c:forEach>
                 <c:if test="${empty mediciones}">
                     <tr>
-                        <td colspan="6" class="text-center text-muted py-4">
+                        <td colspan="8" class="text-center text-muted py-4">
                             Aún no tienes mediciones registradas.
                         </td>
                     </tr>

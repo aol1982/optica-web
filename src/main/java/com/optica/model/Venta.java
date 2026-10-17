@@ -6,14 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Venta {
+
     private int idVenta;
     private int idCliente;
+    private int idMedicion;
     private int idVendedor;
-    private Integer idMedicion;
-    private LocalDateTime fecha;
     private BigDecimal subtotal;
     private BigDecimal impuesto;
     private BigDecimal total;
+    private LocalDateTime fechaVenta;
     private List<DetalleVenta> detalles = new ArrayList<>();
 
     public Venta() {}
@@ -24,14 +25,11 @@ public class Venta {
     public int getIdCliente() { return idCliente; }
     public void setIdCliente(int idCliente) { this.idCliente = idCliente; }
 
+    public int getIdMedicion() { return idMedicion; }
+    public void setIdMedicion(int idMedicion) { this.idMedicion = idMedicion; }
+
     public int getIdVendedor() { return idVendedor; }
     public void setIdVendedor(int idVendedor) { this.idVendedor = idVendedor; }
-
-    public Integer getIdMedicion() { return idMedicion; }
-    public void setIdMedicion(Integer idMedicion) { this.idMedicion = idMedicion; }
-
-    public LocalDateTime getFecha() { return fecha; }
-    public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
 
     public BigDecimal getSubtotal() { return subtotal; }
     public void setSubtotal(BigDecimal subtotal) { this.subtotal = subtotal; }
@@ -41,6 +39,9 @@ public class Venta {
 
     public BigDecimal getTotal() { return total; }
     public void setTotal(BigDecimal total) { this.total = total; }
+
+    public LocalDateTime getFechaVenta() { return fechaVenta; }
+    public void setFechaVenta(LocalDateTime fechaVenta) { this.fechaVenta = fechaVenta; }
 
     public List<DetalleVenta> getDetalles() { return detalles; }
     public void setDetalles(List<DetalleVenta> detalles) { this.detalles = detalles; }

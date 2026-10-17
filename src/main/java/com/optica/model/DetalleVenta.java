@@ -3,19 +3,22 @@ package com.optica.model;
 import java.math.BigDecimal;
 
 public class DetalleVenta {
+
     private int idDetalle;
     private int idVenta;
     private Integer idAro;
     private Integer idLuna;
+    private Integer idAccesorio;
     private int cantidad;
     private BigDecimal precioUnitario;
 
     public DetalleVenta() {}
 
-    public DetalleVenta(Integer idAro, Integer idLuna,
+    public DetalleVenta(Integer idAro, Integer idLuna, Integer idAccesorio,
                         int cantidad, BigDecimal precioUnitario) {
         this.idAro = idAro;
         this.idLuna = idLuna;
+        this.idAccesorio = idAccesorio;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
     }
@@ -32,6 +35,9 @@ public class DetalleVenta {
     public Integer getIdLuna() { return idLuna; }
     public void setIdLuna(Integer idLuna) { this.idLuna = idLuna; }
 
+    public Integer getIdAccesorio() { return idAccesorio; }
+    public void setIdAccesorio(Integer idAccesorio) { this.idAccesorio = idAccesorio; }
+
     public int getCantidad() { return cantidad; }
     public void setCantidad(int cantidad) { this.cantidad = cantidad; }
 
@@ -47,6 +53,7 @@ public class DetalleVenta {
     @Override
     public String toString() {
         return "DetalleVenta{aro=" + idAro + ", luna=" + idLuna +
-               ", cant=" + cantidad + ", precio=" + precioUnitario + '}';
+               ", accesorio=" + idAccesorio + ", cant=" + cantidad +
+               ", precio=" + precioUnitario + '}';
     }
 }

@@ -1,7 +1,10 @@
 package com.optica.controller;
 
-import com.optica.model.*;
-import com.optica.service.*;
+import com.optica.model.Usuario;
+import com.optica.model.Venta;
+import com.optica.service.AroService;
+import com.optica.service.ClienteService;
+import com.optica.service.VentaService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,14 +20,14 @@ public class VentaServlet extends HttpServlet {
 
     private final VentaService ventaService = new VentaService();
     private final AroService aroService = new AroService();
-    private final AuthService authService = new AuthService();
+    private final ClienteService clienteService = new ClienteService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         req.setAttribute("aros", aroService.listarTodos());
-        req.setAttribute("clientes", authService.listarClientes());
+        req.setAttribute("clientes", clienteService.listarTodos());
         req.setAttribute("ventas", ventaService.listarTodas());
 
         req.getRequestDispatcher("/WEB-INF/views/vendedor/ventas.jsp").forward(req, resp);
@@ -39,20 +42,21 @@ public class VentaServlet extends HttpServlet {
 
         try {
             int idCliente = Integer.parseInt(req.getParameter("idCliente"));
-            Integer idMedicion = parsearNullable(req.getParameter("idMedicion"));
+            int idMedicion = Integer.parseInt(req.getParameter("idMedicion"));
             Integer idAro = parsearNullable(req.getParameter("idAro"));
             Integer idLuna = parsearNullable(req.getParameter("idLuna"));
+            Integer idAccesorio = parsearNullable(req.getParameter("idAccesorio"));
             int cantidad = Integer.parseInt(req.getParameter("cantidad"));
 
             Venta v = ventaService.registrarVenta(idCliente, vendedor.getIdUsuario(),
-                    idMedicion, idAro, idLuna, cantidad);
+                    idMedicion, idAro, idLuna, idAccesorio, cantidad);
 
             resp.sendRedirect(req.getContextPath() + "/vendedor/ventas?ok=" + v.getIdVenta());
 
         } catch (Exception e) {
             req.setAttribute("error", "Error al registrar venta: " + e.getMessage());
             req.setAttribute("aros", aroService.listarTodos());
-            req.setAttribute("clientes", authService.listarClientes());
+            req.setAttribute("clientes", clienteService.listarTodos());
             req.setAttribute("ventas", ventaService.listarTodas());
             req.getRequestDispatcher("/WEB-INF/views/vendedor/ventas.jsp").forward(req, resp);
         }

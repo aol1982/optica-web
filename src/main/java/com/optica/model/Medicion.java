@@ -1,31 +1,22 @@
 package com.optica.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Medicion {
+
     private int idMedicion;
     private int idCliente;
-    private String ojo;
-    private BigDecimal esfera;
-    private BigDecimal cilindro;
-    private Integer eje;
+    private BigDecimal esferaOd;
+    private BigDecimal cilindroOd;
+    private Integer ejeOd;
+    private BigDecimal esferaOi;
+    private BigDecimal cilindroOi;
+    private Integer ejeOi;
     private BigDecimal adicion;
-    private LocalDate fecha;
+    private LocalDateTime fechaRegistro;
 
     public Medicion() {}
-
-    public Medicion(int idCliente, String ojo, BigDecimal esfera,
-                    BigDecimal cilindro, Integer eje,
-                    BigDecimal adicion, LocalDate fecha) {
-        this.idCliente = idCliente;
-        this.ojo = ojo;
-        this.esfera = esfera;
-        this.cilindro = cilindro;
-        this.eje = eje;
-        this.adicion = adicion;
-        this.fecha = fecha;
-    }
 
     public int getIdMedicion() { return idMedicion; }
     public void setIdMedicion(int idMedicion) { this.idMedicion = idMedicion; }
@@ -33,27 +24,35 @@ public class Medicion {
     public int getIdCliente() { return idCliente; }
     public void setIdCliente(int idCliente) { this.idCliente = idCliente; }
 
-    public String getOjo() { return ojo; }
-    public void setOjo(String ojo) { this.ojo = ojo; }
+    public BigDecimal getEsferaOd() { return esferaOd; }
+    public void setEsferaOd(BigDecimal esferaOd) { this.esferaOd = esferaOd; }
 
-    public BigDecimal getEsfera() { return esfera; }
-    public void setEsfera(BigDecimal esfera) { this.esfera = esfera; }
+    public BigDecimal getCilindroOd() { return cilindroOd; }
+    public void setCilindroOd(BigDecimal cilindroOd) { this.cilindroOd = cilindroOd; }
 
-    public BigDecimal getCilindro() { return cilindro; }
-    public void setCilindro(BigDecimal cilindro) { this.cilindro = cilindro; }
+    public Integer getEjeOd() { return ejeOd; }
+    public void setEjeOd(Integer ejeOd) { this.ejeOd = ejeOd; }
 
-    public Integer getEje() { return eje; }
-    public void setEje(Integer eje) { this.eje = eje; }
+    public BigDecimal getEsferaOi() { return esferaOi; }
+    public void setEsferaOi(BigDecimal esferaOi) { this.esferaOi = esferaOi; }
+
+    public BigDecimal getCilindroOi() { return cilindroOi; }
+    public void setCilindroOi(BigDecimal cilindroOi) { this.cilindroOi = cilindroOi; }
+
+    public Integer getEjeOi() { return ejeOi; }
+    public void setEjeOi(Integer ejeOi) { this.ejeOi = ejeOi; }
 
     public BigDecimal getAdicion() { return adicion; }
     public void setAdicion(BigDecimal adicion) { this.adicion = adicion; }
 
-    public LocalDate getFecha() { return fecha; }
-    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
+    public LocalDateTime getFechaRegistro() { return fechaRegistro; }
+    public void setFechaRegistro(LocalDateTime fechaRegistro) { this.fechaRegistro = fechaRegistro; }
 
     @Override
     public String toString() {
-        return "Medicion{" + ojo + " esf=" + esfera + ", cil=" + cilindro +
-               ", eje=" + eje + ", add=" + adicion + ", fecha=" + fecha + '}';
+        return "Medicion{id=" + idMedicion + ", cliente=" + idCliente +
+               ", OD=" + esferaOd + "/" + cilindroOd + "/" + ejeOd +
+               ", OI=" + esferaOi + "/" + cilindroOi + "/" + ejeOi +
+               ", add=" + adicion + '}';
     }
 }

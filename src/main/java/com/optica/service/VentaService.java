@@ -3,13 +3,12 @@ package com.optica.service;
 import com.optica.dao.*;
 import com.optica.dao.impl.*;
 import com.optica.model.*;
-import com.optica.util.ConexionBD;
+import com.optica.util.Conexion;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class VentaService {
@@ -32,39 +31,37 @@ public class VentaService {
         this.lunaDAO = lunaDAO;
     }
 
-    public Venta registrarVenta(int idCliente, int idVendedor, Integer idMedicion,
-                                 Integer idAro, Integer idLuna, int cantidad) {
+    public Venta registrarVenta(int idCliente, int idVendedor, int idMedicion,
+                                 Integer idAro, Integer idLuna, Integer idAccesorio,
+                                 int cantidad) {
 
         if (idCliente <= 0 || idVendedor <= 0)
             throw new IllegalArgumentException("Cliente y vendedor son obligatorios");
-        if (idAro == null && idLuna == null)
-            throw new IllegalArgumentException("Debe seleccionar al menos un aro o una luna");
+        if (idMedicion <= 0)
+            throw new IllegalArgumentException("La medición es obligatoria");
+        if (idAro == null && idLuna == null && idAccesorio == null)
+            throw new IllegalArgumentException("Debe seleccionar al menos un producto");
         if (cantidad <= 0)
             throw new IllegalArgumentException("La cantidad debe ser mayor a cero");
 
-        BigDecimal precioAro = BigDecimal.ZERO;
-        BigDecimal precioLuna = BigDecimal.ZERO;
-
-        Aro aro = null;
-        Luna luna = null;
+        BigDecimal precioUnitario = BigDecimal.ZERO;
 
         if (idAro != null) {
-            aro = aroDAO.buscarPorId(idAro);
+            Aro aro = aroDAO.buscarPorId(idAro);
             if (aro == null) throw new IllegalArgumentException("El aro no existe");
             if (aro.getStock() < cantidad)
                 throw new IllegalStateException("Stock insuficiente del aro: " + aro.getStock());
-            precioAro = aro.getPrecio();
+            precioUnitario = precioUnitario.add(aro.getPrecio());
         }
 
         if (idLuna != null) {
-            luna = lunaDAO.buscarPorId(idLuna);
+            Luna luna = lunaDAO.buscarPorId(idLuna);
             if (luna == null) throw new IllegalArgumentException("La luna no existe");
             if (luna.getStock() < cantidad)
                 throw new IllegalStateException("Stock insuficiente de la luna: " + luna.getStock());
-            precioLuna = luna.getPrecio();
+            precioUnitario = precioUnitario.add(luna.getPrecio());
         }
 
-        BigDecimal precioUnitario = precioAro.add(precioLuna);
         BigDecimal subtotal = precioUnitario.multiply(BigDecimal.valueOf(cantidad))
                                             .setScale(2, RoundingMode.HALF_UP);
         BigDecimal impuesto = subtotal.multiply(IMPUESTO)
@@ -75,17 +72,16 @@ public class VentaService {
         venta.setIdCliente(idCliente);
         venta.setIdVendedor(idVendedor);
         venta.setIdMedicion(idMedicion);
-        venta.setFecha(LocalDateTime.now());
         venta.setSubtotal(subtotal);
         venta.setImpuesto(impuesto);
         venta.setTotal(total);
 
-        DetalleVenta detalle = new DetalleVenta(idAro, idLuna, cantidad, precioUnitario);
+        DetalleVenta detalle = new DetalleVenta(idAro, idLuna, idAccesorio, cantidad, precioUnitario);
         venta.agregarDetalle(detalle);
 
         Connection c = null;
         try {
-            c = ConexionBD.getConexion();
+            c = Conexion.getConexion();
             c.setAutoCommit(false);
 
             ventaDAO.insertar(venta, c);
@@ -109,7 +105,7 @@ public class VentaService {
         } finally {
             if (c != null) {
                 try { c.setAutoCommit(true); } catch (SQLException ignored) {}
-                ConexionBD.cerrar(c);
+                Conexion.cerrar(c);
             }
         }
     }
