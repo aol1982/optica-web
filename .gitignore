@@ -33,3 +33,6 @@ logs/
 # Otros
 *.war
 *.ear
+
+# Archivos con credenciales locales - NO subir a GitHub
+src/main/java/TestConexion.java
