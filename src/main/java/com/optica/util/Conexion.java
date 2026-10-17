@@ -11,6 +11,14 @@ public class Conexion {
 
     private static final Properties CONFIG = cargarConfig();
 
+    static {
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("No se pudo cargar el driver de SQL Server", e);
+        }
+    }
+
     private Conexion() {}
 
     private static Properties cargarConfig() {
