@@ -1,5 +1,7 @@
 package com.optica.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -7,25 +9,31 @@ import java.util.Properties;
 
 public class Conexion {
 
-    private static final String URL =
-        "jdbc:sqlserver://servidor-optica-dencid.database.windows.net:1433;" +
-        "database=optica_db;" +
-        "encrypt=true;" +
-        "trustServerCertificate=false;" +
-        "hostNameInCertificate=*.database.windows.net;" +
-        "loginTimeout=30;";
-
-    private static final String USUARIO = "TU_USUARIO@servidor-optica-dencid";
-
-    private static final String CLAVE = "TU_Password";
+    private static final Properties CONFIG = cargarConfig();
 
     private Conexion() {}
 
+    private static Properties cargarConfig() {
+        Properties p = new Properties();
+        try (InputStream in = Conexion.class
+                .getClassLoader()
+                .getResourceAsStream("db.properties")) {
+            if (in == null) {
+                throw new IllegalStateException(
+                    "No se encontro db.properties. Copia db.properties.example a db.properties y ajusta tus credenciales.");
+            }
+            p.load(in);
+            return p;
+        } catch (IOException e) {
+            throw new RuntimeException("Error al leer db.properties", e);
+        }
+    }
+
     public static Connection getConexion() throws SQLException {
         Properties props = new Properties();
-        props.setProperty("user", USUARIO);
-        props.setProperty("password", CLAVE);
-        return DriverManager.getConnection(URL, props);
+        props.setProperty("user", CONFIG.getProperty("db.user"));
+        props.setProperty("password", CONFIG.getProperty("db.password"));
+        return DriverManager.getConnection(CONFIG.getProperty("db.url"), props);
     }
 
     public static void cerrar(Connection c) {

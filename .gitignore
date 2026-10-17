@@ -36,3 +36,6 @@ logs/
 
 # Archivos con credenciales locales - NO subir a GitHub
 src/main/java/TestConexion.java
+
+# Credenciales locales de BD - NO subir a GitHub
+src/main/resources/db.properties
