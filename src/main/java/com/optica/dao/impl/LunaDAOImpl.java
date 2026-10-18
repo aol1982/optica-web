@@ -2,7 +2,7 @@ package com.optica.dao.impl;
 
 import com.optica.dao.LunaDAO;
 import com.optica.model.Luna;
-import com.optica.util.ConexionBD;
+import com.optica.util.Conexion;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class LunaDAOImpl implements LunaDAO {
 
     @Override
     public int insertar(Luna l) {
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              PreparedStatement ps = c.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, l.getTipo());
             ps.setString(2, l.getMaterial());
@@ -47,7 +47,7 @@ public class LunaDAOImpl implements LunaDAO {
 
     @Override
     public Luna buscarPorId(int id) {
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              PreparedStatement ps = c.prepareStatement(SELECT_BY_ID)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -62,7 +62,7 @@ public class LunaDAOImpl implements LunaDAO {
     @Override
     public List<Luna> listarTodas() {
         List<Luna> lista = new ArrayList<>();
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              Statement st = c.createStatement();
              ResultSet rs = st.executeQuery(SELECT_ALL)) {
             while (rs.next()) lista.add(mapear(rs));
@@ -74,7 +74,7 @@ public class LunaDAOImpl implements LunaDAO {
 
     @Override
     public boolean actualizar(Luna l) {
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              PreparedStatement ps = c.prepareStatement(UPDATE)) {
             ps.setString(1, l.getTipo());
             ps.setString(2, l.getMaterial());
@@ -89,7 +89,7 @@ public class LunaDAOImpl implements LunaDAO {
 
     @Override
     public boolean eliminar(int id) {
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              PreparedStatement ps = c.prepareStatement(DELETE)) {
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
@@ -100,7 +100,7 @@ public class LunaDAOImpl implements LunaDAO {
 
     @Override
     public boolean descontarStock(int idLuna, int cantidad) {
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              PreparedStatement ps = c.prepareStatement(DESCONTAR_STOCK)) {
             ps.setInt(1, cantidad);
             ps.setInt(2, idLuna);

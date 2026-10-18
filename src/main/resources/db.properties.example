@@ -1,3 +1,0 @@
-db.url=jdbc:sqlserver://servidor-optica-dencid.database.windows.net:1433;database=optica_db;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=60;
-db.user=TU_USUARIO@servidor-optica-dencid
-db.password=TU_PASSWORD_AQUI

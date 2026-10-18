@@ -2,7 +2,7 @@ package com.optica.dao.impl;
 
 import com.optica.dao.AroDAO;
 import com.optica.model.Aro;
-import com.optica.util.ConexionBD;
+import com.optica.util.Conexion;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class AroDAOImpl implements AroDAO {
 
     @Override
     public int insertar(Aro a) {
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              PreparedStatement ps = c.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, a.getMarca());
             ps.setString(2, a.getMaterial());
@@ -51,7 +51,7 @@ public class AroDAOImpl implements AroDAO {
 
     @Override
     public Aro buscarPorId(int id) {
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              PreparedStatement ps = c.prepareStatement(SELECT_BY_ID)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -66,7 +66,7 @@ public class AroDAOImpl implements AroDAO {
     @Override
     public List<Aro> listarTodos() {
         List<Aro> lista = new ArrayList<>();
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              Statement st = c.createStatement();
              ResultSet rs = st.executeQuery(SELECT_ALL)) {
             while (rs.next()) lista.add(mapear(rs));
@@ -88,7 +88,7 @@ public class AroDAOImpl implements AroDAO {
         sql.append(" ORDER BY marca");
 
         List<Aro> lista = new ArrayList<>();
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              PreparedStatement ps = c.prepareStatement(sql.toString())) {
             for (int i = 0; i < params.size(); i++) ps.setObject(i + 1, params.get(i));
             try (ResultSet rs = ps.executeQuery()) {
@@ -103,7 +103,7 @@ public class AroDAOImpl implements AroDAO {
     @Override
     public List<Aro> listarStockBajo(int umbral) {
         List<Aro> lista = new ArrayList<>();
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              PreparedStatement ps = c.prepareStatement(STOCK_BAJO)) {
             ps.setInt(1, umbral);
             try (ResultSet rs = ps.executeQuery()) {
@@ -117,7 +117,7 @@ public class AroDAOImpl implements AroDAO {
 
     @Override
     public boolean actualizar(Aro a) {
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              PreparedStatement ps = c.prepareStatement(UPDATE)) {
             ps.setString(1, a.getMarca());
             ps.setString(2, a.getMaterial());
@@ -134,7 +134,7 @@ public class AroDAOImpl implements AroDAO {
 
     @Override
     public boolean eliminar(int id) {
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              PreparedStatement ps = c.prepareStatement(DELETE)) {
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
@@ -145,7 +145,7 @@ public class AroDAOImpl implements AroDAO {
 
     @Override
     public boolean descontarStock(int idAro, int cantidad) {
-        try (Connection c = ConexionBD.getConexion();
+        try (Connection c = Conexion.getConexion();
              PreparedStatement ps = c.prepareStatement(DESCONTAR_STOCK)) {
             ps.setInt(1, cantidad);
             ps.setInt(2, idAro);
