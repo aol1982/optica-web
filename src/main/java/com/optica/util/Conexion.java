@@ -23,12 +23,26 @@ public class Conexion {
 
     private static Properties cargarConfig() {
         Properties p = new Properties();
+
+        // 1. Intentar leer de variables de entorno (ideal para Render/Nube)
+        String envUrl = System.getenv("DB_URL");
+        String envUser = System.getenv("DB_USER");
+        String envPass = System.getenv("DB_PASSWORD");
+
+        if (envUrl != null && envUser != null && envPass != null) {
+            p.setProperty("db.url", envUrl);
+            p.setProperty("db.user", envUser);
+            p.setProperty("db.password", envPass);
+            return p;
+        }
+
+        // 2. Si no hay variables de entorno, leer del archivo local (para tu PC)
         try (InputStream in = Conexion.class
                 .getClassLoader()
                 .getResourceAsStream("db.properties")) {
             if (in == null) {
                 throw new IllegalStateException(
-                    "No se encontro db.properties. Copia db.properties.example a db.properties y ajusta tus credenciales.");
+                    "No se encontro db.properties ni las variables de entorno DB_URL, DB_USER, DB_PASSWORD.");
             }
             p.load(in);
             return p;
