@@ -10,11 +10,11 @@ public class Aro {
     private String color;
     private BigDecimal precio;
     private int stock;
+    private String imagenUrl;
 
     public Aro() {}
 
-    public Aro(String marca, String material, String forma,
-               String color, BigDecimal precio, int stock) {
+    public Aro(String marca, String material, String forma, String color, BigDecimal precio, int stock) {
         this.marca = marca;
         this.material = material;
         this.forma = forma;
@@ -43,6 +43,9 @@ public class Aro {
 
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = stock; }
+
+    public String getImagenUrl() { return imagenUrl; }
+    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
 
     @Override
     public String toString() {

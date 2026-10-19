@@ -11,13 +11,13 @@ import java.util.List;
 public class AroDAOImpl implements AroDAO {
 
     private static final String INSERT =
-        "INSERT INTO aros(marca, material, forma, color, precio, stock) VALUES(?,?,?,?,?,?)";
+        "INSERT INTO aros(marca, material, forma, color, precio, stock, imagen_url) VALUES(?,?,?,?,?,?,?)";
     private static final String SELECT_BY_ID =
         "SELECT * FROM aros WHERE id_aro=?";
     private static final String SELECT_ALL =
         "SELECT * FROM aros ORDER BY marca, forma";
     private static final String UPDATE =
-        "UPDATE aros SET marca=?, material=?, forma=?, color=?, precio=?, stock=? WHERE id_aro=?";
+        "UPDATE aros SET marca=?, material=?, forma=?, color=?, precio=?, stock=?, imagen_url=? WHERE id_aro=?";
     private static final String DELETE =
         "DELETE FROM aros WHERE id_aro=?";
     private static final String DESCONTAR_STOCK =
@@ -35,6 +35,7 @@ public class AroDAOImpl implements AroDAO {
             ps.setString(4, a.getColor());
             ps.setBigDecimal(5, a.getPrecio());
             ps.setInt(6, a.getStock());
+            ps.setString(7, a.getImagenUrl());
             ps.executeUpdate();
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
@@ -125,7 +126,8 @@ public class AroDAOImpl implements AroDAO {
             ps.setString(4, a.getColor());
             ps.setBigDecimal(5, a.getPrecio());
             ps.setInt(6, a.getStock());
-            ps.setInt(7, a.getIdAro());
+            ps.setString(7, a.getImagenUrl());
+            ps.setInt(8, a.getIdAro());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -165,6 +167,7 @@ public class AroDAOImpl implements AroDAO {
         a.setColor(rs.getString("color"));
         a.setPrecio(rs.getBigDecimal("precio"));
         a.setStock(rs.getInt("stock"));
+        a.setImagenUrl(rs.getString("imagen_url"));
         return a;
     }
 }

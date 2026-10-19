@@ -8,6 +8,7 @@ public class Luna {
     private String material;
     private BigDecimal precio;
     private int stock;
+    private String imagenUrl;
 
     public Luna() {}
 
@@ -32,6 +33,9 @@ public class Luna {
 
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = stock; }
+
+    public String getImagenUrl() { return imagenUrl; }
+    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
 
     @Override
     public String toString() {

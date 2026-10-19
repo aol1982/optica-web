@@ -8,11 +8,11 @@ public class Accesorio {
     private String descripcion;
     private BigDecimal precio;
     private int stock;
+    private String imagenUrl;
 
     public Accesorio() {}
 
-    public Accesorio(String nombre, String descripcion,
-                     BigDecimal precio, int stock) {
+    public Accesorio(String nombre, String descripcion, BigDecimal precio, int stock) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -33,6 +33,9 @@ public class Accesorio {
 
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = stock; }
+
+    public String getImagenUrl() { return imagenUrl; }
+    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
 
     @Override
     public String toString() {

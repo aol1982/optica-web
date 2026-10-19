@@ -11,13 +11,13 @@ import java.util.List;
 public class AccesorioDAOImpl implements AccesorioDAO {
 
     private static final String INSERT =
-        "INSERT INTO accesorios(nombre, descripcion, precio, stock) VALUES(?,?,?,?)";
+        "INSERT INTO accesorios(nombre, descripcion, precio, stock, imagen_url) VALUES(?,?,?,?,?)";
     private static final String SELECT_BY_ID =
         "SELECT * FROM accesorios WHERE id_accesorio=?";
     private static final String SELECT_ALL =
         "SELECT * FROM accesorios ORDER BY nombre";
     private static final String UPDATE =
-        "UPDATE accesorios SET nombre=?, descripcion=?, precio=?, stock=? WHERE id_accesorio=?";
+        "UPDATE accesorios SET nombre=?, descripcion=?, precio=?, stock=?, imagen_url=? WHERE id_accesorio=?";
     private static final String DELETE =
         "DELETE FROM accesorios WHERE id_accesorio=?";
 
@@ -29,6 +29,7 @@ public class AccesorioDAOImpl implements AccesorioDAO {
             ps.setString(2, a.getDescripcion());
             ps.setBigDecimal(3, a.getPrecio());
             ps.setInt(4, a.getStock());
+            ps.setString(5, a.getImagenUrl());
             ps.executeUpdate();
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
@@ -78,7 +79,8 @@ public class AccesorioDAOImpl implements AccesorioDAO {
             ps.setString(2, a.getDescripcion());
             ps.setBigDecimal(3, a.getPrecio());
             ps.setInt(4, a.getStock());
-            ps.setInt(5, a.getIdAccesorio());
+            ps.setString(5, a.getImagenUrl());
+            ps.setInt(6, a.getIdAccesorio());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -103,6 +105,7 @@ public class AccesorioDAOImpl implements AccesorioDAO {
         a.setDescripcion(rs.getString("descripcion"));
         a.setPrecio(rs.getBigDecimal("precio"));
         a.setStock(rs.getInt("stock"));
+        a.setImagenUrl(rs.getString("imagen_url"));
         return a;
     }
 }

@@ -59,6 +59,8 @@ public class LoginServlet extends HttpServlet {
             throws IOException {
         if (u.getRol() == Usuario.Rol.CLIENTE) {
             resp.sendRedirect(req.getContextPath() + "/cliente/catalogo");
+        } else if (u.getRol() == Usuario.Rol.ADMINISTRADOR) {
+            resp.sendRedirect(req.getContextPath() + "/admin/dashboard"); // Lo mandamos al panel de admin
         } else {
             resp.sendRedirect(req.getContextPath() + "/vendedor/inventario");
         }

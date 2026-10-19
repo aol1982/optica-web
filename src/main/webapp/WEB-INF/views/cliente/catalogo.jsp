@@ -37,6 +37,11 @@
     <c:forEach var="aro" items="${aros}">
         <div class="col">
             <div class="card h-100 shadow-sm">
+                <img src="${not empty aro.imagenUrl ? aro.imagenUrl : 'https://placehold.co/400x300/EEEEEE/333333?text=Sin+Imagen'}" 
+                     class="card-img-top" 
+                     alt="${aro.marca}" 
+                     style="height: 200px; object-fit: cover;"
+                     onerror="this.onerror=null; this.src='https://placehold.co/400x300/EEEEEE/333333?text=Sin+Imagen';">
                 <div class="card-body">
                     <h5 class="card-title">${aro.marca}</h5>
                     <p class="card-text mb-1"><small class="text-muted">${aro.material} · ${aro.forma} · ${aro.color}</small></p>
@@ -53,8 +58,7 @@
                     </p>
                     <form method="post" action="${pageContext.request.contextPath}/cliente/apartar">
                         <input type="hidden" name="idAro" value="${aro.idAro}">
-                        <button type="submit" class="btn btn-outline-dark btn-sm w-100"
-                                ${aro.stock == 0 ? 'disabled' : ''}>
+                        <button type="submit" class="btn btn-outline-dark btn-sm w-100" ${aro.stock == 0 ? 'disabled' : ''}>
                             <i class="bi bi-bookmark-plus"></i> Apartar
                         </button>
                     </form>

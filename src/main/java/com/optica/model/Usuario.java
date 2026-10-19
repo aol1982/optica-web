@@ -2,7 +2,7 @@ package com.optica.model;
 
 public class Usuario {
 
-    public enum Rol { CLIENTE, VENDEDOR }
+    public enum Rol { CLIENTE, VENDEDOR, ADMINISTRADOR }
 
     private int idUsuario;
     private String correo;

@@ -11,6 +11,7 @@ import com.optica.util.PasswordUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class AuthService {
@@ -37,15 +38,10 @@ public class AuthService {
     public Usuario registrarCliente(String nombre, String dni, String telefono,
                                      String correo, String password) {
         validarRegistro(nombre, dni, correo, password);
-
         String correoLimpio = correo.trim().toLowerCase();
 
-        if (usuarioDAO.existeCorreo(correoLimpio)) {
-            throw new IllegalArgumentException("El correo ya está registrado");
-        }
-        if (clienteDAO.existeDni(dni.trim())) {
-            throw new IllegalArgumentException("El DNI ya está registrado");
-        }
+        if (usuarioDAO.existeCorreo(correoLimpio)) throw new IllegalArgumentException("El correo ya está registrado");
+        if (clienteDAO.existeDni(dni.trim())) throw new IllegalArgumentException("El DNI ya está registrado");
 
         Connection c = null;
         try {
@@ -68,15 +64,10 @@ public class AuthService {
             c.commit();
             return u;
         } catch (SQLException | RuntimeException e) {
-            if (c != null) {
-                try { c.rollback(); } catch (SQLException ignored) {}
-            }
+            if (c != null) { try { c.rollback(); } catch (SQLException ignored) {} }
             throw new RuntimeException("Registro cancelado: " + e.getMessage(), e);
         } finally {
-            if (c != null) {
-                try { c.setAutoCommit(true); } catch (SQLException ignored) {}
-                Conexion.cerrar(c);
-            }
+            if (c != null) { try { c.setAutoCommit(true); } catch (SQLException ignored) {} Conexion.cerrar(c); }
         }
     }
 
@@ -85,9 +76,7 @@ public class AuthService {
         if (password == null || password.length() < 6) throw new IllegalArgumentException("Contraseña mínimo 6 caracteres");
 
         String correoLimpio = correo.trim().toLowerCase();
-        if (usuarioDAO.existeCorreo(correoLimpio)) {
-            throw new IllegalArgumentException("El correo ya está registrado");
-        }
+        if (usuarioDAO.existeCorreo(correoLimpio)) throw new IllegalArgumentException("El correo ya está registrado");
 
         Usuario u = new Usuario();
         u.setCorreo(correoLimpio);
@@ -95,6 +84,14 @@ public class AuthService {
         u.setRol(Usuario.Rol.VENDEDOR);
         usuarioDAO.insertar(u);
         return u;
+    }
+
+    public List<Usuario> listarVendedores() {
+        return usuarioDAO.listarPorRol(Usuario.Rol.VENDEDOR);
+    }
+
+    public boolean eliminarUsuario(int id) {
+        return usuarioDAO.eliminar(id);
     }
 
     public Optional<Usuario> buscarPorId(int id) {

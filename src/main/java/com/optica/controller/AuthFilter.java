@@ -1,7 +1,6 @@
 package com.optica.controller;
 
 import com.optica.model.Usuario;
-
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,9 +34,11 @@ public class AuthFilter implements Filter {
             return;
         }
 
-        if (path.startsWith("/vendedor/") && usuario.getRol() != Usuario.Rol.VENDEDOR) {
-            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Acceso denegado");
-            return;
+        if (path.startsWith("/vendedor/")) {
+            if (usuario.getRol() != Usuario.Rol.VENDEDOR && usuario.getRol() != Usuario.Rol.ADMINISTRADOR) {
+                resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Acceso denegado");
+                return;
+            }
         }
 
         chain.doFilter(request, response);

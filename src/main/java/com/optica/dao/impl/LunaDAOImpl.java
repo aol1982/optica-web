@@ -11,13 +11,13 @@ import java.util.List;
 public class LunaDAOImpl implements LunaDAO {
 
     private static final String INSERT =
-        "INSERT INTO lunas(tipo, material, precio, stock) VALUES(?,?,?,?)";
+        "INSERT INTO lunas(tipo, material, precio, stock, imagen_url) VALUES(?,?,?,?,?)";
     private static final String SELECT_BY_ID =
         "SELECT * FROM lunas WHERE id_luna=?";
     private static final String SELECT_ALL =
         "SELECT * FROM lunas ORDER BY tipo";
     private static final String UPDATE =
-        "UPDATE lunas SET tipo=?, material=?, precio=?, stock=? WHERE id_luna=?";
+        "UPDATE lunas SET tipo=?, material=?, precio=?, stock=?, imagen_url=? WHERE id_luna=?";
     private static final String DELETE =
         "DELETE FROM lunas WHERE id_luna=?";
     private static final String DESCONTAR_STOCK =
@@ -31,6 +31,7 @@ public class LunaDAOImpl implements LunaDAO {
             ps.setString(2, l.getMaterial());
             ps.setBigDecimal(3, l.getPrecio());
             ps.setInt(4, l.getStock());
+            ps.setString(5, l.getImagenUrl());
             ps.executeUpdate();
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
@@ -80,7 +81,8 @@ public class LunaDAOImpl implements LunaDAO {
             ps.setString(2, l.getMaterial());
             ps.setBigDecimal(3, l.getPrecio());
             ps.setInt(4, l.getStock());
-            ps.setInt(5, l.getIdLuna());
+            ps.setString(5, l.getImagenUrl());
+            ps.setInt(6, l.getIdLuna());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -118,6 +120,7 @@ public class LunaDAOImpl implements LunaDAO {
         l.setMaterial(rs.getString("material"));
         l.setPrecio(rs.getBigDecimal("precio"));
         l.setStock(rs.getInt("stock"));
+        l.setImagenUrl(rs.getString("imagen_url"));
         return l;
     }
 }
