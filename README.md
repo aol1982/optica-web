@@ -26,10 +26,6 @@ Aplicación web completa para la gestión de una óptica, desarrollada en Java (
 4. Copiar el archivo `target/optica-web.war` a la carpeta `webapps` de Tomcat.
 5. Iniciar Tomcat y acceder a: `http://localhost:8080/optica-web/`
 
-## 👤 Credenciales de prueba
-- **Cliente:** `cliente@test.com` / `cliente123`
-- **Vendedor:** `admin@optica.com` / `admin123`
-
 ## 📂 Arquitectura
 - `model`: Clases de negocio (Usuario, Cliente, Aro, Venta, etc.)
 - `dao`: Interfaces de acceso a datos.
