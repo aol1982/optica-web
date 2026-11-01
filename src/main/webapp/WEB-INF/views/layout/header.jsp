@@ -25,6 +25,8 @@
                 </c:if>
                 <c:if test="${sessionScope.usuario.rol == 'VENDEDOR'}">
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/vendedor/inventario">Inventario</a></li>
+                    <!-- LÍNEA NUEVA -->
+                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/vendedor/mediciones">Mediciones</a></li>
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/vendedor/ventas">Ventas</a></li>
                 </c:if>
             </ul>
