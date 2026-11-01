@@ -1,5 +1,8 @@
 package com.optica.controller;
 
+import com.optica.dao.MedicionDAO;
+import com.optica.dao.impl.MedicionDAOImpl;
+import com.optica.model.Medicion;
 import com.optica.model.Usuario;
 import com.optica.model.Venta;
 import com.optica.service.AroService;
@@ -14,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "VentaServlet", urlPatterns = {"/vendedor/ventas"})
 public class VentaServlet extends HttpServlet {
@@ -21,13 +25,17 @@ public class VentaServlet extends HttpServlet {
     private final VentaService ventaService = new VentaService();
     private final AroService aroService = new AroService();
     private final ClienteService clienteService = new ClienteService();
+    private final MedicionDAO medicionDAO = new MedicionDAOImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        List<Medicion> mediciones = medicionDAO.listarTodas();
+
         req.setAttribute("aros", aroService.listarTodos());
         req.setAttribute("clientes", clienteService.listarTodos());
+        req.setAttribute("mediciones", mediciones);
         req.setAttribute("ventas", ventaService.listarTodas());
 
         req.getRequestDispatcher("/WEB-INF/views/vendedor/ventas.jsp").forward(req, resp);
@@ -57,6 +65,7 @@ public class VentaServlet extends HttpServlet {
             req.setAttribute("error", "Error al registrar venta: " + e.getMessage());
             req.setAttribute("aros", aroService.listarTodos());
             req.setAttribute("clientes", clienteService.listarTodos());
+            req.setAttribute("mediciones", medicionDAO.listarTodas());
             req.setAttribute("ventas", ventaService.listarTodas());
             req.getRequestDispatcher("/WEB-INF/views/vendedor/ventas.jsp").forward(req, resp);
         }

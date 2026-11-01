@@ -19,6 +19,13 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <h5 class="card-title">Nueva venta</h5>
+                
+                <c:if test="${empty mediciones}">
+                    <div class="alert alert-warning py-2">
+                        No hay recetas registradas. <a href="${pageContext.request.contextPath}/vendedor/mediciones">Crea una medición primero</a>.
+                    </div>
+                </c:if>
+
                 <form method="post" action="${pageContext.request.contextPath}/vendedor/ventas">
                     <div class="mb-2">
                         <label class="form-label">Cliente</label>
@@ -29,11 +36,19 @@
                             </c:forEach>
                         </select>
                     </div>
+                    
                     <div class="mb-2">
-                        <label class="form-label">ID Medición (obligatorio)</label>
-                        <input type="number" name="idMedicion" class="form-control" required min="1"
-                               placeholder="ID de la medición del cliente">
+                        <label class="form-label">Medición</label>
+                        <select name="idMedicion" class="form-select" required>
+                            <option value="">— Selecciona una receta —</option>
+                            <c:forEach var="med" items="${mediciones}">
+                                <option value="${med.idMedicion}">
+                                    Receta #${med.idMedicion} (Cliente ID: ${med.idCliente})
+                                </option>
+                            </c:forEach>
+                        </select>
                     </div>
+
                     <div class="mb-2">
                         <label class="form-label">Aro (opcional)</label>
                         <select name="idAro" class="form-select">
@@ -45,15 +60,18 @@
                             </c:forEach>
                         </select>
                     </div>
+                    
                     <div class="mb-2">
                         <label class="form-label">Accesorio (opcional)</label>
                         <input type="number" name="idAccesorio" class="form-control" placeholder="ID accesorio">
                     </div>
+                    
                     <div class="mb-3">
                         <label class="form-label">Cantidad</label>
                         <input type="number" name="cantidad" class="form-control" value="1" min="1" required>
                     </div>
-                    <button type="submit" class="btn btn-success w-100">
+                    
+                    <button type="submit" class="btn btn-success w-100" ${empty mediciones ? 'disabled' : ''}>
                         <i class="bi bi-cash-coin"></i> Registrar venta
                     </button>
                 </form>
