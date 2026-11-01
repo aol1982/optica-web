@@ -17,6 +17,8 @@ public class MedicionDAOImpl implements MedicionDAO {
         "SELECT * FROM mediciones WHERE id_medicion=?";
     private static final String SELECT_BY_CLIENTE =
         "SELECT * FROM mediciones WHERE id_cliente=? ORDER BY fecha_registro DESC";
+    private static final String SELECT_ALL =
+        "SELECT * FROM mediciones ORDER BY fecha_registro DESC";
     private static final String UPDATE =
         "UPDATE mediciones SET esfera_od=?, cilindro_od=?, eje_od=?, " +
         "esfera_oi=?, cilindro_oi=?, eje_oi=?, adicion=? WHERE id_medicion=?";
@@ -72,6 +74,19 @@ public class MedicionDAOImpl implements MedicionDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) lista.add(mapear(rs));
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Medicion> listarTodas() {
+        List<Medicion> lista = new ArrayList<>();
+        try (Connection c = Conexion.getConexion();
+             Statement st = c.createStatement();
+             ResultSet rs = st.executeQuery(SELECT_ALL)) {
+            while (rs.next()) lista.add(mapear(rs));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
